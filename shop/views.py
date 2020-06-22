@@ -44,7 +44,7 @@ def home(request):
 """
 LOGIN-LOGOUT VIEWS
 """
-@unauthenticated_users
+
 def loginPage(request):
     if request.method == 'POST':
         username=request.POST.get("username")
