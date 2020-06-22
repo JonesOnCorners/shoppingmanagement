@@ -25,7 +25,7 @@ SECRET_KEY = '=z&#748s!ri@5h13tpfyjjb3zn82z-2!^xvh*on^so%14u%c=d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','shopmanagement-app.herokuapp.com']
 
 
 # Application definition
@@ -144,7 +144,7 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'static/images/')
 
-
+LOGIN_REDIRECT_URL = 'home'
 
 LOGOUT_REDIRECT_URL = 'login'
 
