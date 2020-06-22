@@ -13,6 +13,7 @@ from shop.decorators import unauthenticated_users, allowed_users, admin_only
 
 # Create your views here.
 
+@login_required(login_url='login')
 def home(request):
     payment = Payment.objects.all()
     supplier = Supplier.objects.all()
@@ -44,7 +45,7 @@ def home(request):
 """
 LOGIN-LOGOUT VIEWS
 """
-
+@unauthenticated_users
 def loginPage(request):
     if request.method == 'POST':
         username=request.POST.get("username")
@@ -53,10 +54,10 @@ def loginPage(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect(reverse('home'))
+            return redirect('home')
         else:
             messages.error(request,'Kindly Register First.')
-            return redirect(reverse('login'))
+            return redirect('login')
     context = {}
     return render(request, 'shop/login.html', context)
 
@@ -70,6 +71,7 @@ def logoutUser(request):
 """
 SUPPLIER VIEWS
 """
+@login_required(login_url='login')
 def createSupplier(request):
     
     form = None
@@ -86,6 +88,7 @@ def createSupplier(request):
     context = {'form' : form}
     return render(request, 'shop/suppliercreateform.html', context)
 
+@login_required(login_url='login')
 def viewSupplier(request,pk):
     supplier = Supplier.objects.get(id=pk)
     payments = supplier.payment_set.all()
@@ -106,10 +109,10 @@ def viewSupplier(request,pk):
     context = { 'supplier'  : supplier
                 ,'payments' : payments
                 ,'total_payment' : total_payment
-                ,'myFilter' : myFilter}
+                , 'myFilter' : myFilter}
     return render(request,'shop/supplier.html',context)
 
-
+@login_required(login_url='login')
 def addTransaction(request,pk):
     orderFormSet = inlineformset_factory(Supplier, Payment, fields=('bill_number','payment_done','transaction_type','status'), extra= 1)
     supplier = Supplier.objects.get(id=pk)
