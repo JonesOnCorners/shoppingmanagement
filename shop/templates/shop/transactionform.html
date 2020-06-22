@@ -1,0 +1,24 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container content-section">
+    <fieldset class="form-group">
+        <legend class="mb-2">Add New Transaction : {{customer}}</legend>
+        <div class="row ml-4">
+            <div class="col-sm-8">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{ formset.management_form }}
+                    {% for form in formset %}
+                    {{form | crispy }}     
+                    {% endfor %}               
+                    
+                    <input type='submit' class="btn btn-primary btn-sm"name="submit">
+                    <a href="{% url 'view-supplier' supplier.id %}" class="btn btn-primary btn-sm">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </fieldset>
+</div>
+{% endblock %}

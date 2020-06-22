@@ -1,0 +1,27 @@
+{% extends 'shop/base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+<fieldset class="form-group">
+    <legend>ADD NEW SUPPLIER:</legend>
+    <div class="row">
+        <div class="col-sm-6">
+            <form method="POST" action="">
+            {% csrf_token %}
+            {{form | crispy }}
+            <input type="submit" class="btn btn-info btn-sm" value="Create"/>
+            <a href="{% url 'home' %}" class="btn btn-danger btn-sm">Cancel</a>
+            </form>            
+            
+        </div>
+        
+    </div>
+</div>
+</fieldset>
+
+
+{% endblock %}

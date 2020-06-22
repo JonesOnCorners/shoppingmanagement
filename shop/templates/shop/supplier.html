@@ -1,0 +1,100 @@
+{% load static %}
+{% include 'shop/navbar.html' %}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>CRM</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static './css/main.css' %}">
+</head>
+<body>
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{message.tags}}">
+    {{message}}
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>CUSTOMER</h5>
+            <br>
+            <a class="btn btn-info btn-smbtn-block" href="#">Update Customer</a><br>
+            <a class="btn btn-info btn-smbtn-block" href="{% url 'add-transaction' supplier.id %}">Add New Transaction</a>
+        </div>
+    </div>
+
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>CONTACT INFORMATION</h5>
+            <br>
+            <p><strong>Name: &nbsp;&nbsp;&nbsp;</strong> {{ supplier.name }}</p>
+            <p><strong>Phone: &nbsp;</strong> {{ supplier.phone }}</p>            
+        </div>
+    </div>
+
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>TOTAL AMOUNT:</h5>
+            <br>
+            {% if total_payment > '0.0' %}
+            <h1 style="text-align: center; padding:10px ;background-color: green;">&#8377;{{ total_payment}}</h1>         
+            {% else %}
+            <h1 style="text-align: center; padding:10px ;background-color: red;">&#8377;{{ total_payment}}</h1>         
+            {% endif %}
+        </div>
+    </div>    
+</div>
+
+<br>
+<div class="row">
+    <div class="col">
+        <div class="card card-body">
+            <form method="GET">
+                {% csrf_token %}
+                {{myFilter.form}}
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-primary" type="submit">Filter</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <table class="table table-sm">
+                <tr>
+                    <th>Transation Date</th>
+                    <th>Bill Number</th>
+                    <th>Amount</th>                    
+                    <th>Transaction Type</th>
+                    <th>Update</th>
+                    <th>Remove</th>
+                </tr>      
+                {% for payment in payments %}
+                <tr>
+                    <td>{{payment.date_created}}</td>
+                    <td>{{payment.bill_number}}</td>                    
+                    <td>{{payment.payment_done}}</td>                    
+                    <td>{{payment.transaction_type}}</td>                    
+                                        
+                    <td><a href="#" class="btn btn-primary btn-sm">Update</a></td>
+                    <td><a href="#" class="btn btn-danger btn-sm">Delete</a></td>
+                </tr>      
+                {% endfor %}
+        </div>
+    </div>
+</div>
+
+
