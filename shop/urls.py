@@ -4,7 +4,8 @@ import shop.views as views
 
 
 urlpatterns = [
-    path('',views.home, name='home'),
+    path('',views.index, name='index'),
+    path('home/',views.home, name='home'),
     path('login/',views.loginPage, name='login'),
     path('logout/',views.logoutUser, name='logout'),
     path('createsupplier/',views.createSupplier, name='create-supplier'),

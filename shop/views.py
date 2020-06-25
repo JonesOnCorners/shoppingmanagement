@@ -13,6 +13,11 @@ from shop.decorators import unauthenticated_users, allowed_users, admin_only
 
 # Create your views here.
 
+
+def index(request):
+    return render(request,'shop/index.html')
+
+
 @login_required(login_url='login')
 def home(request):
     payment = Payment.objects.all()
@@ -64,7 +69,7 @@ def loginPage(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect('login')
+    return redirect('/')
 
 
 

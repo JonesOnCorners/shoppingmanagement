@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css'%}">
+
+</head>
+
+<body>
+    <header>
+        <div class="welcome-text">
+            <h1>WELCOME TO<br>FANCY BAG HOUSE</h1>
+            <a href="{% url 'login' %}" class="btn btn-login">LOGIN</a>
+        </div>
+    </header>
+    
+
+
+</body>
+
+</html>
