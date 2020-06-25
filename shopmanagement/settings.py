@@ -25,7 +25,7 @@ SECRET_KEY = '=z&#748s!ri@5h13tpfyjjb3zn82z-2!^xvh*on^so%14u%c=d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','shopmanagement-app.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','shopmanagement-app.herokuapp.com','fancybaghouse.herokuapp.com']
 
 
 # Application definition
