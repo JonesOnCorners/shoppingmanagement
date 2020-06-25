@@ -87,21 +87,21 @@ h1{
 
 
 @media (min-width : 500px) and (min-height : 400px){    
-    body{
+    .welcome-text, .login-button{
         width: 350px;
         height: 300px;
     }
 }
 
 @media (min-width : 1000px) and (min-height : 700px){
-    body{
+    .welcome-text, .login-button{
         width: 700px;
         height: 600px;
     }
 }
 
 @media (min-width : 500px) and (min-height : 401px){
-    body{
+    .welcome-text, .login-button{
         width: 450;
         height: 400px;
     }
