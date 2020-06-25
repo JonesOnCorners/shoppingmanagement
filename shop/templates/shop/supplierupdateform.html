@@ -1,0 +1,31 @@
+{% extends 'shop/base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    
+<fieldset class="form-group">
+    <legend>UPDATE SUPPLIER:</legend>
+    <div class="row">
+        
+        <div class="col-sm-6">
+            <form method="POST" action="">
+            {% csrf_token %}
+           
+            
+            {{form | crispy }}
+            <input type="submit" class="btn btn-info btn-sm" value="Update Details"/>
+            <a href="{% url 'view-supplier' supplierid %}" class="btn btn-danger btn-sm">Cancel</a>
+            </form>            
+            
+        </div>
+        
+    </div>
+</div>
+</fieldset>
+
+
+{% endblock %}

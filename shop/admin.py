@@ -6,3 +6,7 @@ from shop.models import Supplier, Payment, Product
 admin.site.register(Supplier)
 admin.site.register(Payment)
 admin.site.register(Product)
+
+
+class PaymentAdmin(admin.ModelAdmin):
+    readonly_fields=('closing_balance')

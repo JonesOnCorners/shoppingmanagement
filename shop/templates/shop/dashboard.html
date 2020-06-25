@@ -43,17 +43,21 @@
             
             <table class="table table-sm">
                 <tr>
-                    <th>Product</th>
-                    <th>Date Ordered</th>
-                    <th>Status</th>
-                    <th>Update</th>
-                    <th>Remove</th>
+                    <th>Supplier Name</th>
+                    <th>Date</th>
+                    <th>Bill Number</th>
+                    <th>Amount</th>
+                    <th>Transaction Type</th>    
+                    <th>Closing Balance</th>                   
                 </tr>
-                {% for payment in payments%}
+                {% for payment in top_five_payments%}
                 <tr>                    
-                    <td>{{payment.date_created}}</td>                                  
-                    <td><a class="btn btn-primary btn-sm" href="#">Update</a></td>  
-                    <td><a class="btn btn-danger  btn-sm" href="#">Delete</a></td>  
+                    <td>{{payment.supplier}}</td>  
+                    <td>{{payment.date_created}}</td>  
+                    <td>{{payment.bill_number}}</td>                    
+                    <td>{{payment.payment_done | floatformat:2}}</td>                    
+                    <td>{{payment.transaction_type}}</td>     
+                    <td>{{payment.closing_balance | floatformat:2}}</td>                                               
                 </tr>
                 {% endfor %}
             </table>

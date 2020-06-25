@@ -20,6 +20,7 @@ def index(request):
 
 @login_required(login_url='login')
 def home(request):
+    top_five_payment = Payment.objects.all()[:5]
     payment = Payment.objects.all()
     supplier = Supplier.objects.all()
 
@@ -42,7 +43,8 @@ def home(request):
                'completed_payments': completed_payments,
                'advance_payments': advance_payments,
                'overdue_payments' : overdue_payments,
-               'total_suppliers': total_suppliers}
+               'total_suppliers': total_suppliers
+               ,'top_five_payments': top_five_payment}
     return render(request,'shop/dashboard.html', context)
 
 
@@ -111,23 +113,58 @@ def viewSupplier(request,pk):
 
     total_payment = "%.2f"%(total_payment)
 
-    context = { 'supplier'  : supplier
+    context = {  'supplier'  : supplier
                 ,'payments' : payments
                 ,'total_payment' : total_payment
-                , 'myFilter' : myFilter}
+                ,'myFilter' : myFilter
+              }
     return render(request,'shop/supplier.html',context)
+
+
+@login_required(login_url='login')
+def updateSupplier(request,pk):
+    supplier = Supplier.objects.get(id=pk) 
+
+    form = None
+    
+    if request.method == 'POST':
+        form = SupplierForm(request.POST, instance=supplier)
+        if form.is_valid():
+            form.save()
+        messages.success(request,'Supplier Data Updated Successfully!!!')
+        params = int(pk)
+        return redirect('view-supplier', params)
+    else:
+        form  = SupplierForm(instance=supplier)
+    context = {'form' : form,
+               'supplierid' : int(pk)}
+    return render(request,'shop/supplierupdateform.html',context)
+
+
+
+
 
 @login_required(login_url='login')
 def addTransaction(request,pk):
+    closing_balance = Payment.objects.values_list('closing_balance',flat=True).last()
+    if closing_balance is None:
+        closing_balance = 0
     orderFormSet = inlineformset_factory(Supplier, Payment, fields=('bill_number','payment_done','transaction_type','status'), extra= 1)
     supplier = Supplier.objects.get(id=pk)
     formset = orderFormSet(queryset=Payment.objects.none(),instance=supplier)
   
-    if request.method == 'POST':
-        print(request.POST)
-        formset = orderFormSet(request.POST,instance=supplier)
+    if request.method == 'POST':            
+        formset = orderFormSet(request.POST,instance=supplier) 
+        
         if formset.is_valid():            
-            formset.save()
+            instances = formset.save(commit=False)
+            for instance in instances:
+                if instance.transaction_type == 'Debit':
+                    instance.closing_balance = closing_balance + instance.payment_done                    
+                if instance.transaction_type == 'Credit':
+                    instance.closing_balance = closing_balance - instance.payment_done
+            
+            instance.save()                
             messages.success(request,'Transaction added!!!')
             params = int(pk)
             return redirect('view-supplier' , params)

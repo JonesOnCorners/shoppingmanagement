@@ -55,11 +55,20 @@ class Payment(models.Model):
     bill_number = models.CharField(max_length=250,blank=False, null=False)    
     payment_done = models.FloatField(blank=False, null=False, default=0,validators=[MinValueValidator(0.00)])
     transaction_type = models.CharField(null=False, blank=False, default=TRANSACTION_TYPE[0][0],choices=TRANSACTION_TYPE,max_length=10)
-    #payment_mode = models.CharField(max_length=250, null=False, choices=PAYMENT_MODE)
+    
+    closing_balance = models.FloatField(blank=False, null=False, default=0)
     date_created = models.DateTimeField(auto_now_add=True, null=False)
     status = models.CharField(max_length=250, null=False, choices=STATUS, default=STATUS[0][0])
     
     def __str__(self):
         return str(self.bill_number)
+
+    def calcClosingBalance(self):        
+        if self.transaction_type == 'Credit':
+            self.closing_balance -= self.payment_done
+        if self.transaction_type == 'Debit':
+            self.closing_balance += self.payment_done
+
+
 
 

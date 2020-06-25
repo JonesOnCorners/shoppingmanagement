@@ -27,7 +27,7 @@
         <div class="card card-body">
             <h5>CUSTOMER</h5>
             <br>
-            <a class="btn btn-info btn-smbtn-block" href="#">Update Customer</a><br>
+            <a class="btn btn-info btn-smbtn-block" href="{% url 'update-supplier' supplier.id %}">Update Customer</a><br>
             <a class="btn btn-info btn-smbtn-block" href="{% url 'add-transaction' supplier.id %}">Add New Transaction</a>
         </div>
     </div>
@@ -75,22 +75,22 @@
         <div class="card card-body">
             <table class="table table-sm">
                 <tr>
-                    <th>Transation Date</th>
+                    <th>Supplier Name</th>
                     <th>Bill Number</th>
-                    <th>Amount</th>                    
-                    <th>Transaction Type</th>
-                    <th>Update</th>
-                    <th>Remove</th>
+                    <th>Date</th>                    
+                    <th>Amount</th>
+                    <th>Transaction Type</th>    
+                    <th>Closing Balance</th>    
                 </tr>      
                 {% for payment in payments %}
                 <tr>
-                    <td>{{payment.date_created}}</td>
-                    <td>{{payment.bill_number}}</td>                    
-                    <td>{{payment.payment_done}}</td>                    
-                    <td>{{payment.transaction_type}}</td>                    
-                                        
-                    <td><a href="#" class="btn btn-primary btn-sm">Update</a></td>
-                    <td><a href="#" class="btn btn-danger btn-sm">Delete</a></td>
+                    <td>{{payment.supplier}}</td>  
+                    <td>{{payment.bill_number}}</td>    
+                    <td>{{payment.date_created}}</td>                  
+                    <td>{{payment.payment_done | floatformat:2}}</td>                    
+                    <td>{{payment.transaction_type}}</td>                                                                                              
+                    <td>{{payment.closing_balance | floatformat:2}}</td> 
+                    
                 </tr>      
                 {% endfor %}
         </div>

@@ -10,7 +10,9 @@ urlpatterns = [
     path('logout/',views.logoutUser, name='logout'),
     path('createsupplier/',views.createSupplier, name='create-supplier'),
     path('supplierdetail/<str:pk>/',views.viewSupplier, name='view-supplier'),
+    path('updatesupplierdetail/<str:pk>/',views.updateSupplier, name='update-supplier'),
     path('addtransaction/<str:pk>',views.addTransaction, name='add-transaction'),
+    
     # path('products',views.products, name='products'),
     # path('customer/<str:pk>/',views.customer, name='customer'),
     # path('createorder/<str:pk>/',views.createOrder, name='create_order'),
